@@ -8,7 +8,9 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 $Esc::
 SoundPlay, *-1, 1
-Send, {Esc}
+Send, {Esc down}
+Sleep 30
+Send, {Esc up}
 return
 
 #i::
@@ -32,7 +34,7 @@ return
 #j::Send {Blind}#{Down}
 #k::Send {Blind}#{Up}
 #h::Send {Blind}#{Left}
-#l::Send {Blind}#{Right} ; TODO: not work. why?
+;#l::Send {Blind}#{Right} ; Windows lock short cut could not be ignored.
 
 close_win_menu:
 {
@@ -119,3 +121,17 @@ move_foreground_chrome:
 ;        IsWinTabMenu := false
 ;    Return
 ;#If
+
+
+; Num pad
+;NumLock::
+;     if numlockmode = True
+;     numlockmode = False
+;          return
+;      numlockmode = True
+;      return
+
+;Numpad0::
+;      if numlockmode = False
+;          return
+;      Send, ^{Tab}
