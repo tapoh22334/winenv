@@ -1,5 +1,7 @@
+
 Param(
-    [parameter(mandatory=$true)][String]$RepoFile
+    [parameter(mandatory=$true)][String]$RepoFile,
+    [parameter(mandatory=$true)][String]$TargetDirFile
 )
 
 $NOW = (Get-Date).ToString("yyyy-MM-dd-HH-mm-ss")
@@ -14,7 +16,16 @@ If(!(test-path -PathType container $LOGDIR)) {
 echo 'Date/Time:' $NOW | Tee-Object -FilePath $LOGFILE
 
 
-restic --repository-file $PSScriptRoot\$RepoFile --password-file $PSScriptRoot\password backup --tag GABRIEL2 --exclude-caches --files-from $PSScriptRoot\target-directory -v | Tee-Object -FilePath $LOGFILE
+restic `
+  --repository-file $PSScriptRoot\$RepoFile `
+  --password-file $PSScriptRoot\password `
+  backup `
+  --tag GABRIEL2 `
+  --exclude-caches `
+  --exclude windows-programfiles `
+  --files-from $PSScriptRoot\$TargetDirFile `
+  -vv `
+  | Tee-Object -FilePath $LOGFILE
 
 
 $NOW = (Get-Date).ToString("yyyy-MM-dd-HH-mm-ss")
